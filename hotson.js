@@ -1,10 +1,3 @@
-   var jsonData = [
-      {e2: "ht", n: 22, o12: false, hello: {clear: "nice!!"}},
-      {e2: "hi", n: 23, o12: true, hello: {clear: {g: "123", h: "765"}}},
-      {e2: [1, "2", 45], n: 24, o12: false, hello: {clear: "Fine"}}
-   ];
-   //var jsonData = {e2: [1, "2", 45], n: 24, o12: false, hello: {clear: "Fine"}};
-
    function render(element, jsonData){
       switch(true){
       case Array.isArray(jsonData):
@@ -43,5 +36,3 @@
       }
       element.textContent = value;
    }
-
-   render(document.querySelector('#fdsa'), jsonData)
