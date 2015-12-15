@@ -1,2 +1,2 @@
 # Hotson
-Reallyeasy client side templating for JSON to HTML
+Really easy client side templating for JSON to HTML
