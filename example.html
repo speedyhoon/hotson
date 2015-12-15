@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<div id="fdsa">
+   <span class="e2"></span>
+   <div class="o12"></div>
+   <label>
+      Name: <input type="search" name=n>
+   </label>
+   <label class="hello">
+      <div name="clear">
+         Cow!!, <span class="g">Test</span>
+         <span class="h">Fed</span>
+      </div>
+   </label>
+</div>
+<script defer src=/hotson.js></script>
+<script defer>
+   var jsonData = [
+      {e2: "ht", n: 22, o12: false, hello: {clear: "nice!!"}},
+      {e2: "hi", n: 23, o12: true, hello: {clear: {g: "123", h: "765"}}},
+      {e2: [1, "2", 45], n: 24, o12: false, hello: {clear: "Fine"}}
+   ];
+   //var jsonData = {e2: [1, "2", 45], n: 24, o12: false, hello: {clear: "Fine"}};
+
+   render(document.querySelector('#fdsa'), jsonData)
+</script>
+
