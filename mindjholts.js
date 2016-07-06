@@ -1,18 +1,19 @@
+'use strict';
 var m = {
 	render: function (element, jsonData){
 		if(Array.isArray(jsonData)){
 			var item, old = element.cloneNode(true), fragment = document.createDocumentFragment();
 			for(item in jsonData){
 				if(jsonData.hasOwnProperty(item)){
-					fragment.appendChild(m.loopy(old, jsonData[item]));
+					fragment.appendChild(m.recurser(old, jsonData[item]));
 				}
 			}
 			element.parentNode.replaceChild(fragment, element);
 		}else if(typeof jsonData === 'object'){
-			element.parentNode.replaceChild(m.loopy(element, jsonData), element);
+			element.parentNode.replaceChild(m.recurser(element, jsonData), element);
 		}
 	},
-	loopy: function(parentElement, jsonData){
+	recurser: function(parentElement, jsonData){
 		var querySelector, element;
 		parentElement = parentElement.cloneNode(true);
 		for(var attr in jsonData){
