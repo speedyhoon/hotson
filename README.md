@@ -1,4 +1,4 @@
-# Hotson
+# Mindjholts
 Mindjholts takes a JavaScript object and inserts its values into DOM elements using each object key within a list of CSS selector rules. JavaScript objects don't need to be modified or prefixed with symbols to take advantage of this micro-library.
 
 This HTML form...
