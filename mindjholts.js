@@ -1,11 +1,14 @@
 'use strict';
 var m = {
 	render: function (element, jsonData){
+		if(typeof jsonData === 'string'){
+			jsonData = JSON.parse(jsonData)
+		}
 		if(Array.isArray(jsonData)){
-			var item, old = element.cloneNode(true), fragment = document.createDocumentFragment();
+			var item, clone = element.cloneNode(true), fragment = document.createDocumentFragment();
 			for(item in jsonData){
 				if(jsonData.hasOwnProperty(item)){
-					fragment.appendChild(m.recurser(old, jsonData[item]));
+					fragment.appendChild(m.recurser(clone, jsonData[item]));
 				}
 			}
 			element.parentNode.replaceChild(fragment, element);
@@ -37,10 +40,9 @@ var m = {
 	},
 	assignValue: function(element, value){
 		switch(element.tagName){
-		case 'INPUT':
-			element.setAttribute('value', value);
-			return;
+		case 'INPUT': element.setAttribute('value', value); break;
+		case 'IMG': element.setAttribute('src', value); break;
+		default: element.textContent = value;
 		}
-		element.textContent = value;
 	}
 };
