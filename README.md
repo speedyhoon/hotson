@@ -63,3 +63,5 @@ Is transformed into:
 	<tr><td>Sam<td>Smith<td>Tennis<td>7
 </table>
 ```
+
+Why name it mindjholts? It is an anagram of _HTML JSON id_.
