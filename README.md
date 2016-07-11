@@ -1,5 +1,5 @@
 # Mindjholts
-Mindjholts takes a JavaScript object and inserts its values into DOM elements using each object key within a list of CSS selector rules. JavaScript objects don't need to be modified or prefixed with symbols to take advantage of this micro-library.
+Mindjholts takes a JavaScript object or JSON string and inserts its values into DOM elements using each object key within a list of CSS selector rules. JavaScript objects don't need to be modified or prefixed with symbols to take advantage of this micro-library.
 
 Forget about manually mapping your RESTful API to DOM elements using a mapping layer. Just create a template with attributes that match your API and voila!
 
@@ -33,7 +33,7 @@ Mindjholts searches for child DOM elements with each JavaScript object key surro
 * :nth-child - ```:nth-child(key_name + 1)``` (only works for integers ignoring variable type)
 * Id - ```#key_name```
 * Class - ```.key_name```
-* Tag name - ```[name=key_name]```
+* Name attribute - ```[name=key_name]```
 
 It is also possible to use arrays.
 ```js
