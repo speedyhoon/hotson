@@ -1,8 +1,13 @@
 'use strict';
 var m = {
 	render: function (element, jsonData){
+		if(!element){
+			return console.warn('No element supplied');
+		}
 		if(typeof jsonData === 'string'){
-			jsonData = JSON.parse(jsonData)
+			try{
+				jsonData = JSON.parse(jsonData);
+			}catch(e){}
 		}
 		if(Array.isArray(jsonData)){
 			var item, clone = element.cloneNode(true), fragment = document.createDocumentFragment();
@@ -14,6 +19,8 @@ var m = {
 			element.parentNode.replaceChild(fragment, element);
 		}else if(typeof jsonData === 'object'){
 			element.parentNode.replaceChild(m.recurser(element, jsonData), element);
+		}else{
+			m.assignValue(element, jsonData);
 		}
 	},
 	recurser: function(parentElement, jsonData){
@@ -21,7 +28,7 @@ var m = {
 		parentElement = parentElement.cloneNode(true);
 		for(var attr in jsonData){
 			if(jsonData.hasOwnProperty(attr)){
-				//Check if attribute is an integer. Not using typeof here because Javascript converts integer object keys to strings.
+				//Check if attribute is an integer. Not using typeof here because JavaScript converts integer object keys to strings.
 				if(attr === ~~attr + ''){
 					querySelector = ':nth-child(' + (~~attr + 1) + ')';
 				}else{
@@ -33,6 +40,8 @@ var m = {
 					}else{
 						m.assignValue(element, jsonData[attr]);
 					}
+				}else{
+					console.log('No element found for', querySelector, 'with contents', jsonData[attr]);
 				}
 			}
 		}
