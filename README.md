@@ -1,5 +1,5 @@
 # Mindjholts
-Mindjholts takes a JavaScript object or JSON string and inserts its values into DOM elements using each object key within a list of CSS selector rules. JavaScript objects don't need to be modified or prefixed with symbols to take advantage of this micro-library.
+Mindjholts takes a JavaScript object or JSON string and inserts its values into DOM elements using each object key as a list of CSS selector rules. JavaScript objects don't need to be modified or prefixed with symbols to take advantage of this micro-library.
 
 Forget about manually mapping your RESTful API to DOM elements using a mapping layer. Just create a template with attributes that match your API and voila!
 
@@ -30,7 +30,7 @@ m.render(document.querySelector('form'), jsonData);
 ```
 
 Mindjholts searches for child DOM elements with each JavaScript object key surrounded with the following CSS notation:
-* :nth-child - ```:nth-child(key_name + 1)``` (expects ints or string ints e.g: 1 or "1")
+* :nth-child - ```:nth-child(key_name + 1)``` (expects numeric or string integers e.g: 1 or "1")
 * Id - ```#key_name```
 * Class - ```.key_name```
 * Name attribute - ```[name=key_name]```
@@ -64,4 +64,4 @@ Is transformed into:
 </table>
 ```
 
-Why name it mindjholts? It is an anagram of _HTML JSON ids_.
+Why name it Mindjholts? It's an anagram of _HTML JSON ids_.

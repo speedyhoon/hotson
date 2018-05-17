@@ -1,47 +1,62 @@
 'use strict';
 var m = {
-	render: function (element, jsonData){
+	render: function (element, obj){
 		if(!element){
 			return console.warn('No element supplied');
 		}
-		if(typeof jsonData === 'string'){
-			try{
-				jsonData = JSON.parse(jsonData);
-			}catch(e){}
-		}
-		if(Array.isArray(jsonData)){
+		if(Array.isArray(obj)){
 			var item, clone = element.cloneNode(true), fragment = document.createDocumentFragment();
-			for(item in jsonData){
-				if(jsonData.hasOwnProperty(item)){
-					fragment.appendChild(m.recurser(clone, jsonData[item]));
+			for(item in obj){
+				if(obj.hasOwnProperty(item)){
+					fragment.appendChild(m.recurser(clone, obj[item]));
 				}
 			}
 			element.parentNode.replaceChild(fragment, element);
-		}else if(typeof jsonData === 'object'){
-			element.parentNode.replaceChild(m.recurser(element, jsonData), element);
+		}else if(typeof obj === 'object'){
+			element.parentNode.replaceChild(m.recurser(element, obj), element);
 		}else{
-			m.assignValue(element, jsonData);
+			m.assignValue(element, obj);
 		}
 	},
-	recurser: function(parentElement, jsonData){
-		var querySelector, element;
+	json: function(element, jsonData){
+		if(jsonData === '' || typeof jsonData !== 'string') return;
+
+		try{
+			jsonData = JSON.parse(jsonData);
+		}catch(e) {
+			return console.error(e);
+		}
+		m.render(element, jsonData);
+	},
+	recurser: function(parentElement, obj){
+		var querySelector = [], element;
 		parentElement = parentElement.cloneNode(true);
-		for(var attr in jsonData){
-			if(jsonData.hasOwnProperty(attr)){
+		for(var attr in obj){
+			if(obj.hasOwnProperty(attr)){
 				//Check if attribute is an integer. Not using typeof here because JavaScript converts integer object keys to strings.
-				if(attr === ~~attr + ''){
+				if(typeof attr === 'number' || attr === ~~attr + ''){
 					querySelector = ':nth-child(' + (~~attr + 1) + ')';
 				}else{
-					querySelector = '#' + attr + ', .' + attr + ', [name=' + attr + ']';
+					if (!attr.startsWith('#')){
+						querySelector.push('#' + attr);
+					}
+					querySelector.push('[name=' + attr + ']');
+					if (!attr.startsWith('.')) {
+						querySelector.push('.' + attr);
+					}
+					if (!attr.startsWith('#') && !attr.startsWith('.')) {
+						querySelector.push(attr);
+					}
+					querySelector = querySelector.join(',');
 				}
 				if(element = parentElement.querySelector(querySelector)){
-					if(typeof jsonData[attr] === 'object' && !Array.isArray(jsonData[attr])){
-						m.render(element, jsonData[attr]);
+					if(typeof obj[attr] === 'object' && !Array.isArray(obj[attr])){
+						m.render(element, obj[attr]);
 					}else{
-						m.assignValue(element, jsonData[attr]);
+						m.assignValue(element, obj[attr]);
 					}
 				}else{
-					console.log('No element found for', querySelector, 'with contents', jsonData[attr]);
+					console.log('No element found for', querySelector, 'with contents', obj[attr]);
 				}
 			}
 		}
@@ -49,9 +64,10 @@ var m = {
 	},
 	assignValue: function(element, value){
 		switch(element.tagName){
-		case 'INPUT': element.setAttribute('value', value); break;
-		case 'IMG': element.setAttribute('src', value); break;
-		default: element.textContent = value;
+			case 'INPUT': return element.setAttribute('value', value);
+			case 'IMG': return element.setAttribute('src', value);
+			case 'BR' || 'HR': return;
+			default: element.textContent = value;
 		}
 	}
 };
